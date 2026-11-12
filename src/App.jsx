@@ -272,7 +272,7 @@ function App() {
         {/* If all windows are closed, show refined centered welcome introduction card */}
         {!hasAnyOpenWindow && (
           <div className="desktop-wallpaper-hero">
-            <h1 className="hero-title">Miss Diola's Portfolio</h1>
+            <h1 className="hero-title">Mish Diola's Portfolio</h1>
             <p className="hero-subtitle">
               Hello and welcome to my portfolio — a curated space for my projects, background, and creative work.
             </p>
