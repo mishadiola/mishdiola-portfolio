@@ -10,7 +10,9 @@ import {
   Code2,
   UserCheck,
   FileText,
-  ImageIcon
+  ImageIcon,
+  Video,
+  ExternalLink
 } from 'lucide-react'
 import './Windows.css'
 
@@ -53,6 +55,9 @@ function ProjectsWindow({ onOpenContacts }) {
       gradient: 'linear-gradient(135deg, #FDE8F1 0%, #F9C0D9 50%, #E9D5FF 100%)',
       accentColor: '#db2777',
       Icon: HeartPulse,
+      videoTitle: 'DASMOM+ Capstone Project Defense Presentation',
+      videoUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/view?usp=sharing',
+      videoEmbedUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/preview',
       screenshots: [
         '/images/projects/dasmom/preview.jpg',
         '/images/projects/dasmom/dashboard.jpg',
@@ -76,6 +81,9 @@ function ProjectsWindow({ onOpenContacts }) {
       gradient: 'linear-gradient(135deg, #FEF9C3 0%, #FFE184 50%, #FED7AA 100%)',
       accentColor: '#ca8a04',
       Icon: Receipt,
+      videoTitle: "Baig's Restaurant POS System Presentation & Tour",
+      videoUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/view?usp=sharing',
+      videoEmbedUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/preview',
       screenshots: [
         '/images/projects/baigs-pos/pos-dashboard.jpg',
         '/images/projects/baigs-pos/order-screen.jpg',
@@ -215,6 +223,48 @@ function ProjectsWindow({ onOpenContacts }) {
               </p>
             </div>
           </div>
+
+          {/* Project Defense Video Presentation Section (Only for DASMOM+ & Baig's POS) */}
+          {activeProject.videoEmbedUrl && (
+            <div className="detail-content-block project-video-block">
+              <div className="detail-section-header project-video-header">
+                <div className="video-header-title-row">
+                  <Video size={16} strokeWidth={2.2} className="detail-section-icon video-icon-accent" aria-hidden="true" />
+                  <h3>Project Video Presentation</h3>
+                </div>
+                <a
+                  href={activeProject.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-drive-link"
+                  title="Open video in Google Drive (new tab)"
+                >
+                  <span>Open in Google Drive</span>
+                  <ExternalLink size={12} strokeWidth={2.2} aria-hidden="true" />
+                </a>
+              </div>
+
+              <p className="project-video-subtitle">
+                Watch the video presentation we prepared for our project defense.
+              </p>
+
+              {/* Responsive 16:9 Video Container */}
+              <div className="project-video-player-container">
+                <iframe
+                  src={activeProject.videoEmbedUrl}
+                  title={activeProject.videoTitle}
+                  className="project-video-iframe"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+
+              <p className="project-video-footnote">
+                Note: Video playback uses Google Drive. If playback does not start directly, click "Open in Google Drive" above to view with your authorized account.
+              </p>
+            </div>
+          )}
 
           {/* Bottom Actions */}
           <div className="detail-actions-footer">
