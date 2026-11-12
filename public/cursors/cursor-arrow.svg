@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+  <!-- Pastel pink arrow with dark purple/slate outline (#292338) -->
+  <path
+    d="M 4 3 L 4 22 L 9.8 17.2 L 14.8 26 L 18.2 24.2 L 13.4 15.6 L 20.6 15.6 Z"
+    fill="#F6A4CB"
+    stroke="#292338"
+    stroke-width="1.8"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+  <!-- Subtle specular highlight on inner spine -->
+  <path
+    d="M 6 6 L 6 18.5 L 9.5 15.5 L 14.2 24 L 15.2 23.5 L 11.2 15 L 17 15 Z"
+    fill="#ffffff"
+    opacity="0.35"
+  />
+</svg>

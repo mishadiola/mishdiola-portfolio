@@ -15,22 +15,19 @@
   max-height: calc(100vh - 165px);
   max-height: calc(100dvh - 165px);
   transition: 
-    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.22s ease,
     opacity 0.2s ease;
-  will-change: transform, box-shadow;
-  animation: window-appear 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: box-shadow;
+  animation: window-appear 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
 }
 
 @keyframes window-appear {
   0% {
     opacity: 0;
-    transform: scale(0.97) translateY(8px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
   }
 }
 
@@ -104,7 +101,11 @@
   height: auto !important;
   transform: none !important;
   border-radius: 20px !important;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: top 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              left 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              right 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease !important;
 }
 
 .macos-window.mode-snapped-left {
@@ -119,7 +120,11 @@
   height: auto !important;
   transform: none !important;
   border-radius: 20px !important;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: top 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              left 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease !important;
 }
 
 .macos-window.mode-snapped-right {
@@ -134,7 +139,11 @@
   height: auto !important;
   transform: none !important;
   border-radius: 20px !important;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: top 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              right 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease !important;
 }
 
 /* macOS Traffic Light Buttons */
@@ -319,6 +328,8 @@
   min-height: 0; /* Essential for flex child scrolling */
   padding: 24px;
   scroll-behavior: smooth;
+  container-type: inline-size;
+  container-name: windowcontent;
 }
 
 /* Clean Custom Scrollbar */

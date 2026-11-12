@@ -30,6 +30,46 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Playful Cursor (Desktop Fine Pointer Only) */
+@media (hover: hover) and (pointer: fine) {
+  html, body {
+    cursor: url('/cursors/cursor-arrow.svg') 4 3, auto;
+  }
+
+  /* Interactive elements use matching pastel pointer */
+  button, 
+  a, 
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  select {
+    cursor: url('/cursors/cursor-pointer.svg') 10 3, pointer;
+  }
+
+  /* Draggable title bars maintain native desktop feedback */
+  .window-header {
+    cursor: grab !important;
+  }
+
+  .window-header:active,
+  .macos-window.is-dragging,
+  .macos-window.is-dragging .window-header {
+    cursor: grabbing !important;
+  }
+
+  /* Text elements maintain standard text cursor */
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Retain standard smooth ergonomics */
+}
+
 body {
   min-height: 100vh;
   min-height: 100dvh;

@@ -200,6 +200,7 @@ function Window({
       windowStyle.position = 'fixed'
       windowStyle.top = 0
       windowStyle.left = 0
+      windowStyle.margin = 0
     }
   }
 
