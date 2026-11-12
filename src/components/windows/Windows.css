@@ -628,26 +628,12 @@
 }
 
 .project-preview {
+  height: 90px;
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background-color: #fafaf9;
-}
-
-.project-preview-cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card:hover .project-preview-cover-img {
-  transform: scale(1.02);
+  padding: 12px;
 }
 
 .project-tag-pill {
@@ -866,26 +852,13 @@
 }
 
 .detail-header-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 110px;
   border-radius: 16px;
-  overflow: hidden;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 
-    0 8px 24px -6px rgba(0, 0, 0, 0.08),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
-  background-color: #fafaf9;
-}
-
-.detail-header-cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .detail-header-icon {
@@ -981,31 +954,31 @@
   border-color: #bfdbfe;
 }
 
-.gallery-placeholder-box {
-  background: #f9fafb;
-  border: 1.5px dashed rgba(0, 0, 0, 0.12);
+/* Interface Screenshots Gallery (Displayed only when real screenshots exist) */
+.detail-screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.screenshot-item-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
-  padding: 18px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 8px;
+  overflow: hidden;
+  background: #0f172a;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.gallery-note {
-  font-size: 12px;
-  color: #6b7280;
-  max-width: 380px;
-  line-height: 1.4;
-}
-
-.gallery-note code {
-  background: rgba(0, 0, 0, 0.05);
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 11px;
+.screenshot-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: #fafaf9;
 }
 
 /* Project Video Presentation Section (Stage 7) */

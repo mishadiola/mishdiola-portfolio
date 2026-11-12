@@ -45,12 +45,12 @@ function ProjectsWindow({ onOpenContacts }) {
       institution: 'Kolehiyo ng Lungsod ng Dasmariñas',
       category: 'Healthcare Information System',
       shortDesc:
-        'A web-based maternal healthcare information system designed to support health tracking, resource management, and clinic workflows.',
+        'A web-based maternal healthcare information system developed as an academic project. My main contributions focused on front-end development, UI design, and collaboration during system planning and documentation.',
       fullOverview:
-        'A web-based maternal healthcare information system developed to improve healthcare monitoring and clinical record management.',
+        'A web-based maternal healthcare information system developed as an academic project to support clinic workflows, health tracking, and resource management.',
       contribution:
-        'Primarily front-end and UI-focused development, translating requirements into user-friendly interfaces, and collaborating throughout system planning, development, and documentation.',
-      technologies: null, // Resume does not specify tech stack for DASMOM+
+        'My main contributions focused on front-end development, UI design, and collaboration during system planning and documentation.',
+      technologies: null, // Sourced from resume; focus areas shown below
       focusPills: ['Front-End Development', 'UI/UX Design', 'System Planning', 'Documentation'],
       gradient: 'linear-gradient(135deg, #FDE8F1 0%, #F9C0D9 50%, #E9D5FF 100%)',
       accentColor: '#db2777',
@@ -60,10 +60,7 @@ function ProjectsWindow({ onOpenContacts }) {
       videoTitle: 'DASMOM+ Capstone Project Defense Presentation',
       videoUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/view?usp=sharing',
       videoEmbedUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/preview',
-      screenshots: [
-        '/images/projects/dasmom/preview.jpg',
-        '/images/projects/dasmom/dashboard.jpg',
-      ],
+      screenshots: [], // Only rendered if real screenshots exist
     },
     {
       id: 2,
@@ -73,11 +70,11 @@ function ProjectsWindow({ onOpenContacts }) {
       institution: 'Kolehiyo ng Lungsod ng Dasmariñas',
       category: 'Point-of-Sale System',
       shortDesc:
-        'A web-based point-of-sale system supporting sales tracking, billing, and order management for restaurant operations.',
+        'A web-based point-of-sale system designed to support sales tracking and order management. Developed using PHP, MySQL, HTML, and CSS.',
       fullOverview:
-        'A web-based point-of-sale system supporting real-time sales tracking, table orders, and transactions management.',
+        'A web-based point-of-sale system designed to support real-time sales tracking, table orders, and transactions management for restaurant operations.',
       contribution:
-        'System development and collaboration with stakeholders to understand operational requirements and translate them into functional system features.',
+        'System development using PHP, MySQL, HTML, and CSS, collaborating with stakeholders to translate operational requirements into functional system features.',
       technologies: ['PHP', 'MySQL', 'HTML', 'CSS'],
       focusPills: ['POS Architecture', 'Order Management', 'Database Design'],
       gradient: 'linear-gradient(135deg, #FEF9C3 0%, #FFE184 50%, #FED7AA 100%)',
@@ -88,10 +85,7 @@ function ProjectsWindow({ onOpenContacts }) {
       videoTitle: "Baig's Restaurant POS System Presentation & Tour",
       videoUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/view?usp=sharing',
       videoEmbedUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/preview',
-      screenshots: [
-        '/images/projects/baigs-pos/pos-dashboard.jpg',
-        '/images/projects/baigs-pos/order-screen.jpg',
-      ],
+      screenshots: [], // Only rendered if real screenshots exist
     },
     {
       id: 3,
@@ -101,7 +95,7 @@ function ProjectsWindow({ onOpenContacts }) {
       institution: 'Kolehiyo ng Lungsod ng Dasmariñas',
       category: 'Pet Adoption Web Application',
       shortDesc:
-        'A web-based pet adoption platform featuring dual user and administrator portals for listing pets and processing applications.',
+        'A web-based pet adoption platform featuring separate user and administrator interfaces. Users can browse pets and submit adoption applications, while administrators can manage pet records and adoption requests.',
       fullOverview:
         'A web-based pet adoption system with dedicated interfaces for both prospective pet adopters and rescue shelter administrators.',
       contribution:
@@ -114,8 +108,10 @@ function ProjectsWindow({ onOpenContacts }) {
       coverImage: '/images/projects/fureverhome-cover.png',
       coverAlt: 'FureverHome Pet Adoption Platform Artwork Cover',
       screenshots: [
-        '/images/projects/fureverhome/adopt-portal.jpg',
-        '/images/projects/fureverhome/admin-records.jpg',
+        {
+          src: '/images/projects/fureverhome/fureverhome_dashboard.png',
+          alt: 'FureverHome Pet Adoption System Dashboard Preview',
+        },
       ],
     },
   ]
@@ -225,19 +221,31 @@ function ProjectsWindow({ onOpenContacts }) {
             )}
           </div>
 
-          {/* Screenshot Gallery Placeholder */}
-          <div className="detail-content-block">
-            <div className="detail-section-header">
-              <ImageIcon size={15} strokeWidth={2.2} className="detail-section-icon" aria-hidden="true" />
-              <h3>Interface Preview</h3>
+          {/* Real Additional Screenshot Gallery (Conditionally rendered ONLY if screenshots exist) */}
+          {Array.isArray(activeProject.screenshots) && activeProject.screenshots.length > 0 && (
+            <div className="detail-content-block">
+              <div className="detail-section-header">
+                <ImageIcon size={15} strokeWidth={2.2} className="detail-section-icon" aria-hidden="true" />
+                <h3>Interface Screenshots</h3>
+              </div>
+              <div className="detail-screenshots-grid">
+                {activeProject.screenshots.map((item, index) => {
+                  const src = typeof item === 'string' ? item : item.src
+                  const alt = typeof item === 'string' ? `${activeProject.title} Screenshot ${index + 1}` : item.alt
+                  return (
+                    <div key={src || index} className="screenshot-item-box">
+                      <img
+                        src={src}
+                        alt={alt}
+                        className="screenshot-preview-img"
+                        loading="lazy"
+                      />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            <div className="gallery-placeholder-box">
-              <activeProject.Icon size={24} strokeWidth={1.8} style={{ color: activeProject.accentColor }} aria-hidden="true" />
-              <p className="gallery-note">
-                Real screenshots can be placed in <code>public/images/projects/{activeProject.id === 1 ? 'dasmom' : activeProject.id === 2 ? 'baigs-pos' : 'fureverhome'}/</code>
-              </p>
-            </div>
-          </div>
+          )}
 
           {/* Project Defense Video Presentation Section (Only for DASMOM+ & Baig's POS) */}
           {activeProject.videoEmbedUrl && (
