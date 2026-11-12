@@ -21,21 +21,16 @@ function App() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Desktop: About Me & Projects open by default in balanced arrangement. Contacts closed by default.
-  // Mobile: Clean homescreen initially (all windows closed); tapping a folder opens focused single panel.
-  const [openWindows, setOpenWindows] = useState(() => {
-    const isNarrow = typeof window !== 'undefined' ? window.innerWidth <= 768 : false
-    if (isNarrow) {
-      return { about: false, projects: false, contacts: false }
-    }
-    return { about: true, projects: true, contacts: false }
+  // Initial load behavior: ALL windows are closed by default on desktop and mobile.
+  // Only the centered welcome introduction card is displayed initially.
+  const [openWindows, setOpenWindows] = useState({
+    about: false,
+    projects: false,
+    contacts: false,
   })
 
-  // Currently focused/active window
-  const [activeWindow, setActiveWindow] = useState(() => {
-    const isNarrow = typeof window !== 'undefined' ? window.innerWidth <= 768 : false
-    return isNarrow ? null : 'about'
-  })
+  // Currently focused/active window (null initially since all are closed)
+  const [activeWindow, setActiveWindow] = useState(null)
 
   // Dynamic window stacking (z-index)
   const [windowZIndices, setWindowZIndices] = useState({
@@ -93,8 +88,7 @@ function App() {
   // Dock item selection handler
   const handleSelectFolder = useCallback((folderId) => {
     if (openWindows[folderId]) {
-      // On desktop: if active, toggle/close; if in background, bring to front
-      // On mobile: if active, close back to homescreen
+      // If active, toggle/close; if in background, bring to front
       if (activeWindow === folderId) {
         closeWindow(folderId)
       } else {
@@ -183,33 +177,33 @@ function App() {
 
       {/* 4. Desktop Main Canvas & Interactive Windows Stage */}
       <main className="desktop-canvas">
-        {/* If all windows are closed, show clean desktop welcome state */}
+        {/* If all windows are closed, show refined centered welcome introduction card */}
         {!hasAnyOpenWindow && (
           <div className="desktop-wallpaper-hero">
-            <h1 className="hero-title">Mish's Portfolio</h1>
+            <h1 className="hero-title">Miss Diola's Portfolio</h1>
             <p className="hero-subtitle">
-              Personal digital homescreen & interactive portfolio
+              Hello and welcome to my portfolio — a curated space for my projects, background, and creative work.
             </p>
             <div className="hero-button-group">
               <button
                 type="button"
-                className="btn-primary btn-small"
+                className="btn-primary btn-intro"
                 onClick={() => openWindow('about')}
               >
-                Open About Me
+                About Me
               </button>
               <button
                 type="button"
-                className="btn-secondary btn-small"
+                className="btn-secondary btn-intro"
                 onClick={() => openWindow('projects')}
               >
-                Open Projects
+                Projects
               </button>
             </div>
           </div>
         )}
 
-        {/* Windows Stage (Balanced desktop arrangement) */}
+        {/* Windows Stage */}
         <div className="windows-stage">
           {/* Window 1: About Me (mish.profile) - Pastel Pink #F6A4CB */}
           <Window
