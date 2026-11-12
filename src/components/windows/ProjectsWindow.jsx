@@ -55,6 +55,8 @@ function ProjectsWindow({ onOpenContacts }) {
       gradient: 'linear-gradient(135deg, #FDE8F1 0%, #F9C0D9 50%, #E9D5FF 100%)',
       accentColor: '#db2777',
       Icon: HeartPulse,
+      coverImage: '/images/projects/dasmom-cover.png',
+      coverAlt: 'DASMOM+ Maternal Healthcare Monitoring and Resource Management System Dashboard Cover',
       videoTitle: 'DASMOM+ Capstone Project Defense Presentation',
       videoUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/view?usp=sharing',
       videoEmbedUrl: 'https://drive.google.com/file/d/1bCj_EE7KoK_nmvoIuTgGQd1FPkjzGtYj/preview',
@@ -81,6 +83,8 @@ function ProjectsWindow({ onOpenContacts }) {
       gradient: 'linear-gradient(135deg, #FEF9C3 0%, #FFE184 50%, #FED7AA 100%)',
       accentColor: '#ca8a04',
       Icon: Receipt,
+      coverImage: '/images/projects/baigs-pos-cover.png',
+      coverAlt: "Point-of-Sale System for Baig's Restaurant Header Artwork Cover",
       videoTitle: "Baig's Restaurant POS System Presentation & Tour",
       videoUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/view?usp=sharing',
       videoEmbedUrl: 'https://drive.google.com/file/d/12qExcVbsegS4ye1VsSbEkSJL8uhRtQba/preview',
@@ -107,6 +111,8 @@ function ProjectsWindow({ onOpenContacts }) {
       gradient: 'linear-gradient(135deg, #E0F2FE 0%, #A8D8FC 50%, #BBF7D0 100%)',
       accentColor: '#0284c7',
       Icon: Home,
+      coverImage: '/images/projects/fureverhome-cover.png',
+      coverAlt: 'FureverHome Pet Adoption Platform Artwork Cover',
       screenshots: [
         '/images/projects/fureverhome/adopt-portal.jpg',
         '/images/projects/fureverhome/admin-records.jpg',
@@ -140,12 +146,21 @@ function ProjectsWindow({ onOpenContacts }) {
             </span>
           </div>
 
-          {/* Project Header Banner */}
+          {/* Project Header Banner (Custom Cover Artwork) */}
           <div className="detail-header-card" style={{ background: activeProject.gradient }}>
+            {activeProject.coverImage ? (
+              <img
+                src={activeProject.coverImage}
+                alt={activeProject.coverAlt}
+                className="detail-header-cover-img"
+                loading="eager"
+              />
+            ) : (
+              <div className="detail-header-icon" aria-hidden="true">
+                <activeProject.Icon size={32} strokeWidth={2} style={{ color: activeProject.accentColor }} />
+              </div>
+            )}
             <span className="project-tag-pill">{activeProject.category}</span>
-            <div className="detail-header-icon" aria-hidden="true">
-              <activeProject.Icon size={32} strokeWidth={2} style={{ color: activeProject.accentColor }} />
-            </div>
           </div>
 
           {/* Title & Metadata */}
@@ -311,14 +326,23 @@ function ProjectsWindow({ onOpenContacts }) {
 
               return (
                 <article key={project.id} className="project-card">
-                  {/* Abstract Themed Visual Header */}
+                  {/* Custom Themed Visual Header Image */}
                   <div className="project-preview" style={{ background: project.gradient }}>
-                    <span className="project-tag-pill">{project.category}</span>
-                    <div className="project-preview-graphic" aria-hidden="true">
-                      <div className="preview-graphic-glow">
-                        <ProjectIcon size={24} strokeWidth={2} style={{ color: project.accentColor }} />
+                    {project.coverImage ? (
+                      <img
+                        src={project.coverImage}
+                        alt={project.coverAlt}
+                        className="project-preview-cover-img"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="project-preview-graphic" aria-hidden="true">
+                        <div className="preview-graphic-glow">
+                          <ProjectIcon size={24} strokeWidth={2} style={{ color: project.accentColor }} />
+                        </div>
                       </div>
-                    </div>
+                    )}
+                    <span className="project-tag-pill">{project.category}</span>
                   </div>
 
                   {/* Project Details */}
