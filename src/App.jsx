@@ -7,19 +7,45 @@ import ProjectsWindow from './components/windows/ProjectsWindow'
 import ContactsWindow from './components/windows/ContactsWindow'
 import './App.css'
 
+function getDefaultPositions() {
+  if (typeof window === 'undefined') {
+    return {
+      about: { x: 80, y: 70 },
+      projects: { x: 540, y: 70 },
+      contacts: { x: 280, y: 110 },
+    }
+  }
+
+  const w = window.innerWidth
+  const h = window.innerHeight
+
+  if (w <= 768) {
+    return {
+      about: { x: 12, y: 48 },
+      projects: { x: 12, y: 48 },
+      contacts: { x: 12, y: 48 },
+    }
+  }
+
+  // Calculated desktop balanced positions
+  const aboutW = 440
+  const projectsW = 530
+  const totalW = aboutW + projectsW + 20
+  let startX = Math.max(30, Math.floor((w - totalW) / 2))
+  const startY = Math.max(56, Math.floor((h - 580) / 2))
+
+  return {
+    about: { x: startX, y: startY },
+    projects: { x: startX + aboutW + 20, y: startY },
+    contacts: { x: Math.max(30, Math.floor((w - 450) / 2)), y: startY + 25 },
+  }
+}
+
 function App() {
   // Mobile viewport detection (<= 768px)
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   )
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Initial load behavior: ALL windows are closed by default on desktop and mobile.
   // Only the centered welcome introduction card is displayed initially.
@@ -28,6 +54,19 @@ function App() {
     projects: false,
     contacts: false,
   })
+
+  // Window layout modes: 'floating' | 'snapped-left' | 'snapped-right' | 'maximized'
+  const [windowLayoutModes, setWindowLayoutModes] = useState({
+    about: 'floating',
+    projects: 'floating',
+    contacts: 'floating',
+  })
+
+  // Window desktop coordinates { x, y }
+  const [windowPositions, setWindowPositions] = useState(getDefaultPositions)
+
+  // Active snap target preview: null | 'left' | 'right' | 'top'
+  const [activeSnapPreview, setActiveSnapPreview] = useState(null)
 
   // Currently focused/active window (null initially since all are closed)
   const [activeWindow, setActiveWindow] = useState(null)
@@ -40,6 +79,35 @@ function App() {
   })
 
   const [zIndexCounter, setZIndexCounter] = useState(15)
+
+  // Resize handler to update mobile state & safely clamp positions
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+
+      if (!mobile) {
+        // Clamp desktop floating positions within visible workspace
+        setWindowPositions((prev) => {
+          const w = window.innerWidth
+          const h = window.innerHeight
+          const updated = { ...prev }
+          Object.keys(updated).forEach((id) => {
+            const p = updated[id]
+            if (p) {
+              updated[id] = {
+                x: Math.max(-100, Math.min(w - 120, p.x)),
+                y: Math.max(44, Math.min(h - 100, p.y)),
+              }
+            }
+          })
+          return updated
+        })
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Bring a window to the front
   const bringToFront = useCallback((windowId) => {
@@ -84,6 +152,22 @@ function App() {
       return updated
     })
   }, [activeWindow, windowZIndices])
+
+  // Update window position during or after dragging
+  const handlePositionChange = useCallback((windowId, newPos) => {
+    setWindowPositions((prev) => ({
+      ...prev,
+      [windowId]: newPos,
+    }))
+  }, [])
+
+  // Update window layout mode (e.g. snapped or maximized)
+  const handleLayoutModeChange = useCallback((windowId, newMode) => {
+    setWindowLayoutModes((prev) => ({
+      ...prev,
+      [windowId]: newMode,
+    }))
+  }, [])
 
   // Dock item selection handler
   const handleSelectFolder = useCallback((folderId) => {
@@ -175,6 +259,14 @@ function App() {
         </svg>
       </div>
 
+      {/* Edge Snap Feedback Preview Overlay */}
+      {!isMobile && activeSnapPreview && (
+        <div
+          className={`snap-preview-indicator snap-preview-${activeSnapPreview}`}
+          aria-hidden="true"
+        />
+      )}
+
       {/* 4. Desktop Main Canvas & Interactive Windows Stage */}
       <main className="desktop-canvas">
         {/* If all windows are closed, show refined centered welcome introduction card */}
@@ -213,6 +305,12 @@ function App() {
             isOpen={isWindowVisible('about')}
             isActive={activeWindow === 'about'}
             zIndex={windowZIndices.about}
+            position={windowPositions.about}
+            layoutMode={windowLayoutModes.about}
+            isMobile={isMobile}
+            onPositionChange={handlePositionChange}
+            onLayoutModeChange={handleLayoutModeChange}
+            onSnapPreviewChange={setActiveSnapPreview}
             onClose={closeWindow}
             onFocus={bringToFront}
             className="window-about"
@@ -231,6 +329,12 @@ function App() {
             isOpen={isWindowVisible('projects')}
             isActive={activeWindow === 'projects'}
             zIndex={windowZIndices.projects}
+            position={windowPositions.projects}
+            layoutMode={windowLayoutModes.projects}
+            isMobile={isMobile}
+            onPositionChange={handlePositionChange}
+            onLayoutModeChange={handleLayoutModeChange}
+            onSnapPreviewChange={setActiveSnapPreview}
             onClose={closeWindow}
             onFocus={bringToFront}
             className="window-projects"
@@ -246,6 +350,12 @@ function App() {
             isOpen={isWindowVisible('contacts')}
             isActive={activeWindow === 'contacts'}
             zIndex={windowZIndices.contacts}
+            position={windowPositions.contacts}
+            layoutMode={windowLayoutModes.contacts}
+            isMobile={isMobile}
+            onPositionChange={handlePositionChange}
+            onLayoutModeChange={handleLayoutModeChange}
+            onSnapPreviewChange={setActiveSnapPreview}
             onClose={closeWindow}
             onFocus={bringToFront}
             className="window-contacts"

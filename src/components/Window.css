@@ -63,10 +63,78 @@
   justify-content: space-between;
   padding: 0 12px 0 16px;
   user-select: none;
-  cursor: default;
+  -webkit-user-select: none;
+  cursor: grab;
+  touch-action: none;
   flex-shrink: 0;
   position: relative;
   z-index: 5;
+}
+
+.window-header:active {
+  cursor: grabbing;
+}
+
+.macos-window.is-dragging {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  transition: box-shadow 0.15s ease, opacity 0.15s ease !important;
+  opacity: 0.96;
+  box-shadow: 
+    0 36px 85px -10px rgba(0, 0, 0, 0.22),
+    0 16px 32px -4px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.macos-window.is-dragging .window-header {
+  cursor: grabbing !important;
+}
+
+/* Snapped & Maximized Layout Modes for Desktop */
+.macos-window.mode-maximized {
+  position: fixed !important;
+  top: 48px !important;
+  left: 20px !important;
+  right: 20px !important;
+  bottom: 96px !important;
+  width: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  height: auto !important;
+  transform: none !important;
+  border-radius: 20px !important;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.macos-window.mode-snapped-left {
+  position: fixed !important;
+  top: 48px !important;
+  left: 20px !important;
+  right: auto !important;
+  bottom: 96px !important;
+  width: calc(50vw - 28px) !important;
+  max-width: none !important;
+  max-height: none !important;
+  height: auto !important;
+  transform: none !important;
+  border-radius: 20px !important;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.macos-window.mode-snapped-right {
+  position: fixed !important;
+  top: 48px !important;
+  left: auto !important;
+  right: 20px !important;
+  bottom: 96px !important;
+  width: calc(50vw - 28px) !important;
+  max-width: none !important;
+  max-height: none !important;
+  height: auto !important;
+  transform: none !important;
+  border-radius: 20px !important;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* macOS Traffic Light Buttons */
@@ -114,7 +182,19 @@
 .dot-maximize {
   background-color: #27c93f;
   border-color: #28ad3a;
-  cursor: default;
+  cursor: pointer;
+}
+
+.dot-maximize .dot-icon {
+  font-size: 8px;
+  line-height: 1;
+  color: #064e18;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.traffic-lights:hover .dot-maximize .dot-icon {
+  opacity: 0.85;
 }
 
 .dot-close .dot-icon {
@@ -150,7 +230,36 @@
 .window-header-actions {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+}
+
+.window-action-button {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+  outline: none;
+  position: relative;
+  z-index: 10;
+}
+
+.window-action-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #111827;
+}
+
+.window-action-button:focus-visible {
+  box-shadow: 0 0 0 2px #3b82f6;
 }
 
 .window-header-accent {
@@ -240,6 +349,15 @@
 
 /* Mobile Responsiveness (< 768px) */
 @media (max-width: 768px) {
+  .window-header {
+    cursor: default;
+    touch-action: auto;
+  }
+
+  .window-action-button {
+    display: none;
+  }
+
   .macos-window {
     position: fixed;
     top: 48px;
