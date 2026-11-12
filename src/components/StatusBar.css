@@ -1,0 +1,204 @@
+/* Top Homescreen Status Bar */
+.status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-family: var(--font-primary, 'Poppins', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  z-index: 100;
+  user-select: none;
+}
+
+/* Left Group */
+.status-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.status-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.user-icon {
+  font-size: 14px;
+  color: #f472b6;
+}
+
+.user-name {
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+/* Status Pill */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fef08a;
+  color: #713f12;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+  animation: pulse-dot 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+.status-text-mobile {
+  display: none;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+/* Right Group */
+.status-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.network-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Battery Icon */
+.battery-icon {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.battery-body {
+  width: 22px;
+  height: 11px;
+  border: 1.5px solid #374151;
+  border-radius: 3px;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.battery-level {
+  width: 100%;
+  height: 100%;
+  background-color: #374151;
+  border-radius: 1px;
+}
+
+.battery-cap {
+  width: 2px;
+  height: 4px;
+  background-color: #374151;
+  border-radius: 0 1px 1px 0;
+}
+
+.status-clock {
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.clock-short {
+  display: none;
+}
+
+/* Responsive adjustment for mobile screens (320px - 640px) */
+@media (max-width: 640px) {
+  .status-bar {
+    padding: 0 12px;
+    height: 42px;
+  }
+
+  .status-bar-left {
+    gap: 8px;
+  }
+
+  .status-text-full {
+    display: none;
+  }
+
+  .status-text-mobile {
+    display: inline;
+  }
+
+  .network-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 390px) {
+  .status-bar {
+    padding: 0 10px;
+  }
+
+  .status-bar-left {
+    gap: 6px;
+  }
+
+  .user-name {
+    font-size: 12px;
+  }
+
+  .status-pill {
+    padding: 2px 7px;
+    font-size: 10.5px;
+  }
+
+  .clock-full {
+    display: none;
+  }
+
+  .clock-short {
+    display: inline;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 330px) {
+  .status-pill {
+    display: none;
+  }
+}

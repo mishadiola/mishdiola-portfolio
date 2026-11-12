@@ -1,0 +1,306 @@
+/* Reusable macOS-Inspired Window Shell */
+.macos-window {
+  position: relative;
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 24px 60px -15px rgba(0, 0, 0, 0.14),
+    0 10px 24px -6px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: calc(100vh - 165px);
+  max-height: calc(100dvh - 165px);
+  transition: 
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s ease,
+    opacity 0.2s ease;
+  will-change: transform, box-shadow;
+  animation: window-appear 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+@keyframes window-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Stacking & Focus States */
+.macos-window.is-active {
+  box-shadow: 
+    0 32px 75px -12px rgba(0, 0, 0, 0.18),
+    0 12px 28px -6px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+  transform: translateY(0);
+}
+
+.macos-window.is-inactive {
+  opacity: 0.95;
+  filter: saturate(0.96);
+  box-shadow: 
+    0 16px 36px -10px rgba(0, 0, 0, 0.1),
+    0 6px 16px -4px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Window Title Bar */
+.window-header {
+  height: 46px;
+  min-height: 46px;
+  background: #fbfbfd;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+  user-select: none;
+  cursor: default;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+
+/* macOS Traffic Light Buttons */
+.traffic-lights {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 54px;
+}
+
+.control-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  transition: transform 0.15s ease;
+}
+
+.control-dot:focus-visible {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.dot-close {
+  background-color: #ff5f56;
+  border-color: #e0443e;
+}
+
+.dot-close:hover {
+  transform: scale(1.15);
+}
+
+.dot-minimize {
+  background-color: #ffbd2e;
+  border-color: #dea123;
+  cursor: default;
+}
+
+.dot-maximize {
+  background-color: #27c93f;
+  border-color: #28ad3a;
+  cursor: default;
+}
+
+.dot-close .dot-icon {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  color: #5c0002;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  margin-top: -0.5px;
+}
+
+.traffic-lights:hover .dot-close .dot-icon {
+  opacity: 0.85;
+}
+
+/* Centered Filename Title */
+.window-title-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window-title-text {
+  font-family: var(--font-primary, 'Poppins', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #374151;
+}
+
+/* Right Header Area (Accent Strip + Dedicated X Close Button) */
+.window-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.window-header-accent {
+  width: 22px;
+  height: 6px;
+  border-radius: 999px;
+  opacity: 0.85;
+  transition: transform 0.2s ease;
+}
+
+/* Clearly Visible Dedicated 44x44px Close Button */
+.window-close-button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+  outline: none;
+  position: relative;
+  z-index: 10;
+}
+
+.window-close-button:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #111827;
+  transform: scale(1.06);
+}
+
+.window-close-button:active {
+  background: rgba(0, 0, 0, 0.12);
+  transform: scale(0.96);
+}
+
+.window-close-button:focus-visible {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.close-x-icon {
+  width: 17px;
+  height: 17px;
+}
+
+/* Window Content Scrollable Body */
+.window-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0; /* Essential for flex child scrolling */
+  padding: 24px;
+  scroll-behavior: smooth;
+}
+
+/* Clean Custom Scrollbar */
+.window-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 999px;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.24);
+}
+
+/* Accessibility & Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .macos-window {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Mobile Responsiveness (< 768px) */
+@media (max-width: 768px) {
+  .macos-window {
+    position: fixed;
+    top: 48px;
+    left: 12px;
+    right: 12px;
+    bottom: calc(84px + env(safe-area-inset-bottom, 12px));
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0;
+    border-radius: 20px;
+    z-index: 50;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  }
+
+  .window-header {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 8px 0 12px;
+  }
+
+  .traffic-lights {
+    min-width: 44px;
+    gap: 6px;
+  }
+
+  .control-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .window-title-text {
+    font-size: 12px;
+  }
+
+  .window-header-accent {
+    display: none;
+  }
+
+  .window-close-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .window-content {
+    padding: 16px 14px 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Small screens (320px - 360px) */
+@media (max-width: 360px) {
+  .macos-window {
+    left: 8px;
+    right: 8px;
+    top: 46px;
+    bottom: calc(78px + env(safe-area-inset-bottom, 8px));
+    border-radius: 16px;
+  }
+
+  .window-content {
+    padding: 12px 10px 16px;
+  }
+}

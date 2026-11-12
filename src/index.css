@@ -1,0 +1,61 @@
+/* Global reset & Poppins typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --bg-color: #faf9f5;
+  --grid-line-color: rgba(0, 0, 0, 0.04);
+  --text-main: #111827;
+  --text-muted: #6b7280;
+
+  /* Folder Accent Colors */
+  --color-about: #F6A4CB;
+  --color-projects: #8CCBFA;
+  --color-contacts: #FFD45E;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  font-family: var(--font-primary);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Typography Base Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+p, span, div, li, time {
+  font-family: var(--font-primary);
+  font-weight: 400;
+}
+
+button, input, select, textarea {
+  font-family: var(--font-primary);
+}
