@@ -10,6 +10,9 @@ import {
   Wrench,
   Cpu,
   Award,
+  Users,
+  School,
+  BookOpen,
   ArrowRight,
   Download
 } from 'lucide-react'
@@ -19,6 +22,12 @@ function AboutWindow({ onOpenProjects, onOpenContacts }) {
   // Support real profile photo with seamless fallback to MD monogram
   const [imgError, setImgError] = useState(false)
   const profilePhotoPath = '/images/mish-profile.jpg'
+
+  // Logo error states for external org logos
+  const [upliftLogoError, setUpliftLogoError] = useState(false)
+  const [mwbLogoError, setMwbLogoError] = useState(false)
+  const [kldLogoError, setKldLogoError] = useState(false)
+  const [eacLogoError, setEacLogoError] = useState(false)
 
   // Structured, compact skills categories from resume
   const skillCategories = [
@@ -203,21 +212,113 @@ function AboutWindow({ onOpenProjects, onOpenContacts }) {
             </div>
           </div>
 
-          {/* Training Highlight Card */}
-          <div className="profile-training-card">
-            <div className="training-icon-wrapper" aria-hidden="true">
-              <Award size={18} strokeWidth={2} />
-            </div>
-            <div className="training-content">
-              <div className="training-header">
-                <h4 className="training-title">Uplift Code Camp</h4>
-                <span className="training-year">2025</span>
+          {/* Training & Education Cards Stack */}
+          <div className="training-cards-stack">
+
+            {/* 1. Kolehiyo ng Lungsod ng Dasmariñas — FIRST */}
+            <div className="profile-training-card training-card-kld">
+              <div className="training-logo-wrapper training-logo-kld" aria-hidden="true">
+                {!kldLogoError ? (
+                  <img
+                    src="https://kld.edu.ph/images/kld/kldlogo.png"
+                    alt="Kolehiyo ng Lungsod ng Dasmariñas logo"
+                    className="training-org-logo"
+                    onError={() => setKldLogoError(true)}
+                  />
+                ) : (
+                  <School size={17} strokeWidth={2} />
+                )}
               </div>
-              <span className="training-role">Web Development Bootcamp</span>
-              <p className="training-desc">
-                Five-month front-end development training focused on HTML, CSS, JavaScript, UI design, and real-world projects.
-              </p>
+              <div className="training-content">
+                <div className="training-header">
+                  <h4 className="training-title">Kolehiyo ng Lungsod ng Dasmariñas</h4>
+                  <span className="training-year training-year-green">2023–Present</span>
+                </div>
+                <span className="training-role training-role-green">Bachelor of Science in Information Systems</span>
+                <p className="training-desc">
+                  Undergraduate degree program focusing on information systems, software/web development, UI/UX design, system planning, and technical documentation.
+                </p>
+              </div>
             </div>
+
+            {/* 2. Uplift Code Camp */}
+            <div className="profile-training-card training-card-uplift">
+              <div className="training-logo-wrapper training-logo-uplift" aria-hidden="true">
+                {!upliftLogoError ? (
+                  <img
+                    src="https://www.google.com/s2/favicons?domain=upliftcodecamp.com&sz=64"
+                    alt="Uplift Code Camp logo"
+                    className="training-org-logo"
+                    onError={() => setUpliftLogoError(true)}
+                  />
+                ) : (
+                  <Award size={17} strokeWidth={2} />
+                )}
+              </div>
+              <div className="training-content">
+                <div className="training-header">
+                  <h4 className="training-title">Uplift Code Camp</h4>
+                  <span className="training-year">2025</span>
+                </div>
+                <span className="training-role">Web Development Bootcamp</span>
+                <p className="training-desc">
+                  Five-month front-end development training focused on HTML, CSS, JavaScript, UI design, and real-world projects.
+                </p>
+              </div>
+            </div>
+
+            {/* 3. Mentors Without Borders */}
+            <div className="profile-training-card training-card-mwb">
+              <div className="training-logo-wrapper" aria-hidden="true">
+                {!mwbLogoError ? (
+                  <img
+                    src="https://www.mentorswithoutborders.net/images/main.png"
+                    alt="Mentors Without Borders logo"
+                    className="training-org-logo"
+                    onError={() => setMwbLogoError(true)}
+                  />
+                ) : (
+                  <Users size={17} strokeWidth={2} />
+                )}
+              </div>
+              <div className="training-content">
+                <div className="training-header">
+                  <h4 className="training-title">Mentors Without Borders</h4>
+                  <span className="training-year training-year-blue">2025</span>
+                </div>
+                <span className="training-role training-role-blue">Programming and Career Development Training</span>
+                <p className="training-desc">
+                  Completed a 5-month mentorship program guided by Atlassian software engineers, focusing on programming, portfolio building, and technical interview readiness.
+                </p>
+              </div>
+            </div>
+
+            {/* 4. Emilio Aguinaldo College–Cavite */}
+            <div className="profile-training-card training-card-eac">
+              <div className="training-logo-wrapper training-logo-eac" aria-hidden="true">
+                {!eacLogoError ? (
+                  <img
+                    src="https://www.eac.edu.ph/wp-content/uploads/2018/10/EAC_Emblem.png"
+                    alt="Emilio Aguinaldo College logo"
+                    className="training-org-logo"
+                    onError={() => setEacLogoError(true)}
+                  />
+                ) : (
+                  <BookOpen size={17} strokeWidth={2} />
+                )}
+              </div>
+              <div className="training-content">
+                <div className="training-header">
+                  <h4 className="training-title">Emilio Aguinaldo College–Cavite</h4>
+                  <span className="training-year training-year-purple">2021–2023</span>
+                </div>
+                <span className="training-role training-role-purple">Senior High School — Information and Communications Technology (ICT) Strand</span>
+                <p className="training-desc">
+                  Completed Senior High School under the ICT strand, building foundational skills in computing, digital tools, and technology fundamentals.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

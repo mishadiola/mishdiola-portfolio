@@ -143,7 +143,7 @@ function ProjectsWindow({ onOpenContacts }) {
           </div>
 
           {/* Project Header Banner (Custom Cover Artwork) */}
-          <div className="detail-header-card" style={{ background: activeProject.gradient }}>
+          <div className="detail-header-card">
             {activeProject.coverImage ? (
               <img
                 src={activeProject.coverImage}
@@ -156,7 +156,8 @@ function ProjectsWindow({ onOpenContacts }) {
                 <activeProject.Icon size={32} strokeWidth={2} style={{ color: activeProject.accentColor }} />
               </div>
             )}
-            <span className="project-tag-pill">{activeProject.category}</span>
+            <div className="detail-header-soft-overlay" aria-hidden="true" />
+            <span className="project-tag-pill detail-header-tag-pill">{activeProject.category}</span>
           </div>
 
           {/* Title & Metadata */}
@@ -333,7 +334,20 @@ function ProjectsWindow({ onOpenContacts }) {
               const ProjectIcon = project.Icon
 
               return (
-                <article key={project.id} className="project-card">
+                <div
+                  key={project.id}
+                  className="project-card"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setSelectedProjectId(project.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedProjectId(project.id)
+                    }
+                  }}
+                  aria-label={`View project details for ${project.title}: ${project.category}`}
+                >
                   {/* Custom Themed Visual Header Image */}
                   <div className="project-preview" style={{ background: project.gradient }}>
                     {project.coverImage ? (
@@ -350,6 +364,7 @@ function ProjectsWindow({ onOpenContacts }) {
                         </div>
                       </div>
                     )}
+                    <div className="project-preview-scrim" aria-hidden="true" />
                     <span className="project-tag-pill">{project.category}</span>
                   </div>
 
@@ -369,10 +384,10 @@ function ProjectsWindow({ onOpenContacts }) {
                       <span className="project-number">0{project.id}</span>
                     </div>
 
-                    <h3 className="project-name">{project.title}</h3>
-                    {project.fullName !== project.title && (
-                      <p className="project-fullname-sub">{project.fullName}</p>
-                    )}
+                    <div className="project-header-group">
+                      <h3 className="project-name">{project.title}</h3>
+                      <p className="project-category-sub">{project.category}</p>
+                    </div>
 
                     {/* Concise 1-2 sentence description */}
                     <p className="project-desc">{project.shortDesc}</p>
@@ -388,20 +403,15 @@ function ProjectsWindow({ onOpenContacts }) {
                       </div>
                     </div>
 
-                    {/* Clearly Labeled 'View Project' Action Button */}
+                    {/* Clearly Labeled 'View Project' Action Affordance */}
                     <div className="project-card-footer">
-                      <button
-                        type="button"
-                        className="btn-view-project"
-                        onClick={() => setSelectedProjectId(project.id)}
-                        aria-label={`View details for ${project.title}`}
-                      >
+                      <span className="project-card-action">
                         <span>View Project</span>
-                        <ArrowRight size={14} strokeWidth={2.4} aria-hidden="true" />
-                      </button>
+                        <ArrowRight size={14} strokeWidth={2.4} className="action-arrow" aria-hidden="true" />
+                      </span>
                     </div>
                   </div>
-                </article>
+                </div>
               )
             })}
           </div>
